@@ -1,0 +1,48 @@
+Link Controller Operations:
+
+* 3 Major States: Standby : Connection : Park
+* 9 Substates :Page , page scan, Inquiry, Inquiry Scan, Synchronization Train, Synchronization Scan, Master Response, Slave Response, Inq Res
+* Standby state : Device remains in Low Power mode
+
+Connection Establishment Substate:
+
+	- To Establish New Connection: Paging pr Synchronization scan procedure is used
+	- Only the BD_ADDR is required to initiate connection (via Paging procedure)
+	- Knowledge about the clock would just accelerate the setup
+	- Device using sync-scan procedure does so in 2 steps: 
+	- synchronization scan procedure gives: Clock , Packet Timing, AFH Channel Map Information
+	- From STANDBY to Connectionless slave broadcast
+
+* Page Scan Substate
+	-In the case of a standard scan, if the correlator exceeds the trigger threshold during the page scan, the device shall enter the slave 	 response substate
+	- 
+* Page Substate
+* Page Response substate
+	- Slave Response substate
+	- Master Response substate
+
+
+Device Discovery Substate:
+	- Device shall enter Inquiry state : Transmit Inquiry Message (ID Packets)
+* Inquiry scan substate
+* Inquiry substate
+* Inquiry response substate
+
+Connection State:
+* Exceptioon - connectionless slave broadcast mode
+* Uses : Basic or adapted channel hopping sequence
+* 2 ways to enter: one via page/page scan
+* 2nd, Directly via STANDBY STATE to connectionless slave broadcast mode of the CONNECTION STATE
+* if via Paging -- Master sends POLL Packet to verify to the switch to master timing , slave may respond any type packet
+* if slave doesnt found POLL packet or master doesnt found acknolwedgement packet for newconnectionTO slots, both return to page state
+
+Active Mode:
+Sniff Mode:
+Hold Mode:
+Park State:
+
+Connectionless Slave Broadcast Mode :
+Synchronization establishment substate :
+
+Audio :
+

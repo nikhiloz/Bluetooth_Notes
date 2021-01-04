@@ -1,0 +1,44 @@
+Om.
+
+L2CAP FEATURES:
+	- Protocol Channel Multiplexing, Segmentation and Reassembly, Per channel Flow Control, Error Control & QOS
+	- Interfaces with uppper layer protocol
+	
+General Operation:
+	- Channel Identifiers:
+		- 01 L2CAP signalling channel
+		- 05 LE L2CAP Signalling channel  
+		- 06 SMP Channel
+		- 04 Attribute Protocol
+		- 03 AMP manager Protocl
+		- 02 Connectionless channel
+		- 3F AMP Test Manager
+		- 40 - FFFF Dynamically Allocated
+
+	- Modes of Operation: During Configuration Procedure modes are enabled
+		- Basic L2CAP Mode
+		- Flow Control Mode
+		- Retransmission
+		- Enhanced Retransmission
+		- Streaming 
+
+	- Mapping channels to logical Links:
+		- L2CAP maps channels to controller logical link , which in turn run over Controller Physical Links
+		- BR/EDR : All Best Effort and Guaranteed Channel between BR/EDR Controller mapped to single ACL-U Logical Link
+		- AMP    : All Best Effort one AMP-U and Each Guaranteed is its own AMP-U
+		- LE     : All are best effort only and mapped to one LE-U logical link
+
+		- Creation of a Guaranteed logical link involves admission control. 
+		- Admission control is verifying that the guarantee can be achieved without compromising existing guarantees. 
+		- AMP:  L2CAP shall tell the controller to create a Guaranteed logical link & admission control is done by the Controller. 
+		- BR/EDR : admission control (creation of a Guaranteed logical link) shall be performed by the L2CAP layer 
+
+
+Configuration Parameter Opetions:
+	- Maximum Transmission Unit (MTU)
+	- Flush Timeout Option
+	- Quality of Service Option
+	- Retransmission and Flow control option
+	- Frame check sequence option
+	- Extended flow specification Option
+	- Extended Window Size Option

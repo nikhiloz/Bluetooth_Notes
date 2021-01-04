@@ -1,0 +1,170 @@
+Link Manager Protocol Specification:
+
+PROCEDURE RULES:--
+
+Connection Control:
+* Connection Establishment
+	- LMP_host_connection_req
+	- LMP_setup_complete
+* Detach
+	-LMP_detach
+* Power_Control
+	- INFO: ALL commands are optional
+	- INFO: Legacy Power Control PDU:
+	- LMP_incr_power_req
+	- LMP_decr_power_req
+	- LMP_max_power
+	- LMP_min_power
+
+	- INFO: Enchanced Power Control PDU:
+	- LMP_power_control_req
+	- LMP_power_control_res
+* Adaptive Frequency Hopping
+	@ AFH is used to increase the relaibility in Interference
+* Channel Classification
+	- LMP_Channel_Classification_req
+* Link Supervision
+	- LMP_supervision_timeout
+* Channel Quality Driven Data Rate
+	- LMP_auto_rate
+	- LMP_preferred_rate
+* Quality of Service
+	- LMP_Quality_of_service
+	- LMP_Quality_of_service_req
+* Paging scheme Parameter
+	- LMP_page_mode_req
+	- LMP_page_mode_scan_req
+* Control of multi slot packets
+	- LMP_max_slot
+	- LMP_max_slot_req
+* Enhanced Data Rate
+	- LMP_packet_type_table_req
+* Encapsulated LMP PDU
+	- LMP_encapsulated_header
+	- LMP_encapsulated_payload
+* Ping
+	- LMP_ping_req
+	- LMP_ping_res
+* Piconet Clock Adjustment
+	- Master Coarse Adjustment of piconet clock
+	- Slave request for coarse adjustment of Piconet clock
+
+Security :
+* Authentication
+	- Claimant has link key (Legacy Authentication)
+		- LMP_au_rand
+		- LMP_sres
+	- Claimant has no link key (Legacy Authentication and secure Authentication)
+		- LMP_au_rand
+		- LMP_not_accepted
+	- Repeated Attempts
+		- The scheme described in [Part H] Section 5.1 shall be applied when an authentication fails
+
+	- Responder has link key (Secure Authentication)
+		
+* Pairing
+	- INFO: When 2 devices doesnt have common link key an initilization Kinit shall be created
+	- INFO: by Legacy pairing or secure simple pairing procedure
+	- INFO: Kinit shall be created based on a PIN
+	- INFO: when both devices have calculated Kinit- lnk key shall be created & Mutual Authentication is performed
+	- INFO: pairing starts with LMP_in_rand PDU
+	
+	- Responder accepts pairing
+		- LMP_in_rand
+		- LMP_accepted
+	- Responder has a fixed PIN
+		- LMP_in_rand
+		- LMP_in_rand
+		- LMP_accepted
+	- Responder Rejects Pairing
+		- LMP_in_rand
+		- LMP_not_Accepted
+	- Creation of the link key
+		- When KInit is created both the sides, the link key shall be created
+		- The link key will be : Combination Key or one of the devices unit key
+		- Following Rule Applies for selection of Link Key:
+			- Precedence LMP_unit_key > LMP_comb_key
+			- if both sends LMP_unit_key : Master's selected
+			- if both sends LMP_comb_key : SEcurity Spec Section 3.2 Applies
+			- INFO: Content of LMP_unit_key PDU is bitwise XORED with Kinit
+			- INFO: Content of LMP_comb_key PDU is LK_RAND bitwise XORED with Kinit
+			- INFO: Use of unit key is deprecated since it is implicitely insecure
+		- when the new link key is created the mutual authentication is performed to confirm both have the same link key
+
+	- Repeated Attempts
+		- The scheme described in [Part H] Section 5.1 shall be applied when an authentication fails
+
+* Change Link key
+	- INFO: If the link key derived from combinational key & the current link key is semi permanent link key: it can be changed
+	- Info: it is from the unit key ; devices has to go again via pairing procedure in order to change the link key
+	- contents of LMP_comb_key PDU is protected by bitwise XOR with current link key.
+	- LMP_comb_key
+
+* Change Current link key type
+	- INFO: the current link key can be semi-permanent link key or Temporary link key
+	- INFO: It may be changed temporarily but change shall only be valid for current connection
+	- INFO: changing to a temporary link key is necessary if the piconet is to support encrypted broadcast
+	- INFO: Feature supported in LMP Feature Mask as Broadcast Encryption << Important to Note
+	- Change to a temporary Link key :
+		- INFO: Master starts by creating the key Kmaster, 
+		- CMND: LMP_temp_rand - (Carries RAND from M -> S)
+		- CMND: LMP_temp_key  - (Carries Kmaster protected by modulo 2 addition with OVL from M -> S : OVL = E22(Current LK, RAND, 16))
+		- INFO: Kmaster becomes the current link key
+
+	- Semi Permanent link key becomes Current Link Key
+		- INFO: After LinkKey is Kmaster,it can be undone and the semi-permanent linkkey becomes the current link key again
+		- CMND: LMP_use_semi_permanent_key
+		- CMND: LMP_Accepted
+
+* Encryption
+	- Encryption mode
+	- Encryption key size
+	- Start Encryption
+	- Stop Encryption
+	- Pause Encryption
+	- Resume Encryption
+	- change encryption mode, key or random number
+	- encryption key refresh
+
+* Request supported Encryption key size
+	- LMP_encryption_key_size_mask_req
+	- LMP_encryption_key_size_mask_res
+
+* Secure Simple pairing
+	- IO Capability Exchange -- to know the proper algorithm to be used - Numeric Comparison , Passkey entry , Out of Band
+	- Public Key Exchange -- 45 bytes of public key will be exchanged
+	- Authentication Stage 1 -- 
+	- Authentication Stage 2
+
+Informational Request:
+* Timing Accuracy
+	- LMP_timing_Accuracy_req
+	- LMP_timing_accuracy_res
+* Clock Offset
+	- LMP_clk_offset_req
+	- LMP_clk_offset_res
+* LMP version
+	- LMP_version_req
+	- LMP_version_res
+* Supported Feature
+	- LMP_feature_req
+	- LMP_feature_res
+	- LMP_feature_req_ext
+	- LMP_feature_res_ext
+* Name Request
+	- LMP_name_req
+	- LMP_name_res
+
+Role Switch:
+* Slot_offset :
+* Role Switch :
+
+Modes of Operation:
+* Hold Mode
+* park State
+* Sniff Mode
+
+Logical Transport
+* SCO Logical Transport
+* eSCO Logical Transport
+

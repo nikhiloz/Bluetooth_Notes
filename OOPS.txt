@@ -1,0 +1,21 @@
+Inheritance:  
+	- Inheritance in Object Oriented Programming can be described as a process of creating new classes from existing classes. New 		  classes inherit some of the properties and behavior of the existing classes. An existing class that is "parent" of a new 		  class is called a base class.
+
+		Modes of Inheritance
+
+		Public mode: If we derive a sub class from a public base class. Then the public member of the base class will become 			public in the derived class and protected members of the base class will become protected in derived class. Private 			members of the base class will never get inherited in sub class.
+
+		Protected mode: If we derive a sub class from a Protected base class. Then both public member and protected members 			of the base class will become protected in derived class. Private members of the base class will never get inherited 			in sub class.
+
+		Private mode: If we derive a sub class from a Private base class. Then both public member and protected members of 			the base class will become Private in derived class. Private members of the base class will never get inherited in 			sub class.
+
+
+Polymorphism:
+	- The word polymorphism means having many forms. Typically, polymorphism occurs when there is a hierarchy of classes and they 		  are related by inheritance. C++ polymorphism means that a call to a member function will cause a different function to be 		  executed depending on the type of object that invokes the function
+
+	  i.e. Compile time function Overloading
+
+
+Encapsulation:
+
+	- Encapsulation is an Object Oriented Programming concept that binds together the data and functions that manipulate the 		  data, and that keeps both safe from outside interference and misuse. Data encapsulation led to the important OOP concept of 		  data hiding

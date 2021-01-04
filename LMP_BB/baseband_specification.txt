@@ -1,0 +1,195 @@
+General :
+* many more slaves can remain connected in parked state. 
+* Parked slaves Remains Synchronized.
+* can be activated by connection establishment procedure
+* The channel Access is controlled by master
+* Piconets shall not be frequency synchronized and each piconet has its own hopping sequence.
+* BR:generic format of Packet : Access Code , Header , Payload
+* EDR: Access code, Header, Gaurad, Sync, Payload, Trailer
+* Access code n Header are modulated as according to Basic Rate Scheme.
+* Guard Time Allows for the transition between modulation modes
+
+Bluetooth Clock:
+* For synchronization with other devices offsets are used.
+* native clock is derived from free running system clock.
+* 28bit counter is used.
+* LSB ticks in unit of 312.5 micro seconds , 3.2 khz
+* 4 periods important: 312.5 , 625, 1.25, 1.28 : CLK0, CLK1, CLK2, CLK12
+* CLKN (Native CLock) ; CLKE (Estimated Clock); CLK (Master CLock)
+* The Master shall never adjust its native clock during esistance of the piconet
+
+Bluetooth Device Addressing:
+* 48bit Bluetooth Device Adress BD_ADDR
+* Company Assigned LAP (3 Octets) : Company ID (UAP - 1 Octet : NAP - 2 octets)
+* 64 Contiguous LAPS is reserved for Inquiry Operation 
+* one LAP for generic Inquiry : Remaining 63 for dedicated for device class
+
+Access Codes:
+* Device Access Code (DAC)
+* Channel Access Code (CAC)
+* Inquiry Access Code (IAC)
+* Access codes are derived from LAP of device address or Inquiry Address
+* Device Access Code used in : Page, Page scan and Page response substate and derived from paged device's BD_ADDR
+* Channel Access Code used in CONNECTION STATE n form begining of all pakcets on piconet physical channel
+* CAC is derived from LAP of master
+* IAC used in Inquiry substate : 1 GIAC , 63 DIAC
+* Access code indicates to the receiver the arrival of packets: timing synchronization , offset compensation
+* Receiver correlates against the entire syncronization word in access codes, robust signalling
+
+Physical Channels:
+* characterized by : Pseudo Random FHS + Specific Slot Timing of Txmission + Access Code + Pakcets Header Encoding
+* for the basic n adapted piconet physical channels : Frequency hopping is used to change frequency periodically
+* 4 Bluetooth Channels defined : Basic piconet n Adapted Piconet : physical channel : Connected Device
+* Remaining : Inquiry Scan Channel , Page Scan Channel for Inquiry and Connecting
+* Only one phycial channel can be used by device at a time:
+* Whenever device is Synchronized : Timing + Frequency + Access Code of Physical Channel: It is Connected
+* Hopping Sequence is determined by UAP and LAP of BD_ADDR and Selected Hopping sequence
+* Phase in the hopping Sequence is determined by the Bluetooth Clock
+* Hop Selection kernel : 1600 H/S in Connection State and 3200 H/S in Inquiry n page substate
+* Adapted piconet physical channel can be used if AFH Enabled
+
+Basic Piconet Physical Channel:
+* Hopping characteristic: Frequency hopping is determined by blutooth clock and BD_ADDR of master
+* When the piconet is established, the master clock is communicated to the slave
+* Each slave will add an offset to its native clock to synchronize with master clock
+* All device participating in the piconet are time-synchronized hop-synchronized to the channel.
+* the offsets in the slaves must be regularly updated such that CLK is approximately CLKN of the master.
+* Slaves maintain an estimate of the master’s native clock by adding a timing off- set to the slave’s native clock
+* This offset shall be updated each time a packet is received from the maste
+* The listening periods shall be exactly timed 625 us after the corresponding paging packets, and shall include a +- 10 us uncertainty window.
+
+Hop Selection:
+* 6 types of hopping sequence defined: 5 for the basic and 1 for AFH
+* Page Hopping Seuqnece 32 wakeup frequencies : Distributed equally over 79 channels
+* Page Response Hopping Seuqnece : 32 response frequencies in 1 to 1 correspondance to current page hopping sequence
+* Inquiry Hopping Sequence : 32 wakeup freuqnecies
+* Inquiry Response Hopping Sequence : 32 Response frequencies
+* Basic Channel Hopping Sequnece : Distributed equally over all 79 freuqnecies
+* Adapted Channel Hopping Sequence : Less than 79 Frequncies
+
+General selection Scheme:
+* Selecting a Sequence
+* Mapping this Sequence to hop frequencies
+* Sequence Selection: 
+	- Page Scan
+	- Inquiry Scan 
+	- page
+	- Inquiry
+	- master page response
+	- slave page response
+	- inquiry response
+	- Basic channel
+	- Adapted channel
+
+* UAP/LAP : 28 bits : 24 bits of LAP + 4 LSB of UAP
+
+* When the basic or adapted channel hopping sequence is selected, the Bluetooth device address of the master (BD_ADDR) shall be used
+* When the page, master page response, slave page response, or page scan hopping sequences are selected the BD_ADDR given by the Host of the    paged device shall be used
+* When the inquiry, inquiry response, or inquiry scan hopping sequences are selected, the UAP/LAP corresponding to the GIAC shall be used even if it concerns a DIAC.
+*Whenever one of the reserved BD_ADDRs is used for generating a frequency hop sequence, the UAP shall be replaced by the default check initialization
+
+** REGISTER BANK:
+The registers are loaded with the synthesizer code words corresponding to the hop frequencies 0 to 78. Note that the upper half of the bank contains the even hop frequencies, whereas the lower half of the bank contains the odd hop frequencies
+
+Physical Links:
+* Baseband connection between devices
+* Always Associated with only physcial Channel
+* they posses common properties: Applies to all Logical Trasnport on the physcial link
+	- Power Control
+	- Link Supervision
+	- Encryption
+	- Channel Quality Driven Data Rate Change
+	- Multi Slot Packet Control
+
+Link Supervision:
+* To be able to detect link loss: Link Supervision Timeout is defined
+* Same Link Supervision Timer shall be used for SCO, eSCO and ACL logical Trasnport
+* Supervision TO is negotiated by Link manager
+* Value is chosen such that : It is Greater than Hold & Sniff Period
+* for a Parked Slave it will do unpark - repark
+
+Logical Trasnport:
+* Five Logical Trasnport have been defined
+	- Synchronous Connection Oriented 
+	- Extended Synchronous Connection Oriented
+	- Asynchronous Connection Logic
+	- Active Slave Broadcast
+	- Parked Slave Broadcast
+* Synchronous Connection Orineted : Time Bound Information : Voice or General Syncrhonous Data
+* eSCO logical transport may have re-transmission window after the reserved slots
+* In the slots not reserved after Synchronous Logcial Transport, master may establish the ACL Logical Transport on per slot basis to any slave
+
+
+Logical Transport Address (LT_ADDR):
+* Each Slave Active in Piconet is assigned a Primary 3-bit logical transport Address
+* All Zero LT ADDR is reserved for Broadcast Message
+
+Logical Link: 
+Five Logical Link Defined
+	- Link Control (LC)
+	- ACL Control (ACL-C)
+	- User Asynchronous / Isochronous (ACL-U)
+	- User Synchronous (SCO-S)
+	- User Extended Synchronous (eSCO-S)
+
+* LC and ACL-C are used at Link Control & LMP Level Respectively
+* LC Logical link is carried in packet header , Rest LL are carried in Payload : LC Carries low level link control Information
+* ACL-C & ACL-U are indicated LLID field in payload header
+* SCO-S and eSCO-S are carried by synchronous logical Transport
+* ACL-U link is normally carried by ACL Logical Transport, however it might be carried in DV Packet in SCO Logical Transport
+* ACL-C link may be carried by SCO or ACL logical Transport
+
+Link Controller Logical Link:
+* Mapped onto the packet header
+* carries low ARQ, flow control, payload characterization
+* LC logical link is carried in every packet except ID Packet
+
+ACL Control Logical Link (ACL-C)
+* Carry control information exchnaged between LMP of master n slave
+* Uses LLID code 11 in the payload header.
+
+User Asynchronous/ Isochronous Logical Link (ACL-U)
+* Carry user L2CAP asynchronous / Isochronous user data
+* It can be pasued by the LM
+* for fragmented BB packets LLID = 10 rest LLID = 01; other case LLID = 10
+
+
+Packets:
+* Access code 
+	- it is 72 or 68 bits long
+	- CAC, DAC, GIAC, DIAC 
+	- Access code Format : Preamable 4 bits + SYNC-WORD 64 Bits + optional Trailer 4 bits
+	- In the receiver of the device, a sliding correlator correlates against the access code and triggers when a threshold is exceeded.
+	- The preamble is a fixed zero-one pattern of 4 symbols used to facilitate DC compensation
+	- SYNC-WORD is derived from 24 bits of LAP
+
+* General format for basic rate : Access code + Header + Payload
+	- Header is 54 bits
+	- Payload Ranges 0- 2745 bits
+* EDR Format : Access Code + Header <- GFSK + Gaurd + DPSK-> SYNC + Payload + Trailer
+	-Packet Header : LT_ADDR 3 bits+ Type 4 bits+ Flow 1bit+ ARQN 1bit + SEQN1 bit + HEC 8bit
+
+Packet Types:
+* Packets are related to Logical Transport they r used in , ACL , SCO , eSCO , CSB logical Transport : for each 16 different type
+	- SCO Logical Transport
+	- eSCO Logical Transport
+	- ACL logical Transport
+	- CSB Logical Transport
+
+	- First Segment reserved for control packets i.e. single time slot
+	- Second segment packets contain single time slot
+	- Third Segment for 3 time slot
+	- Fourth Segment for 5 time slot
+
+	- 5 Common Types of packet
+		- ID Packet  : From DAC or IAC - Fixed 68 bits 
+		- NULL Packet: No Payload , CAC + Packet header only .. not need to be ACK
+		- POLL Packet: No Payload but requires ACK
+		- FHS Packet : Special Control Pakcet- carries BD_ADDR + CLock of the sender
+		- DM1 Packet : Part of segment 1 , in order to support control message in any logical transport
+
+
+Payload Format:
+
+	- Synchronous Data Field
+	- Asynchronous Data Field

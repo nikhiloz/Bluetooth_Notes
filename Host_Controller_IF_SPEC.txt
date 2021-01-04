@@ -1,0 +1,101 @@
+Host Controller Interface Functionality Specification:
+
+	- A Primary Controller is Either -- BR/EDR Controller , BR/EDR/LE Controller or an LE Controller
+	- The Host Controller driver (which interfaces to the Controller) should be independent of the underlying transport technology
+
+HCI FLow Control:
+
+	- Flow Control of data shall be used in the direction  from the host to the controller to avoid oevrflowing the controller data buffer
+	- Host manages the data buffers of the controller
+	- for Primary controller ; packet based flow control is default
+	- for AMP Controller, data block based data flow control is the default ACL traffic 
+
+HOST TO CONTROLLER DATA FLOW CONTROL:
+	- 2 methods of data flow control (packet based , data block based) , called buffer management.
+	- Selection is performed by "Write Flow Control Mode Command"
+	
+	</TEXT>
+
+	If a BR/EDR/LE Controller implements separate buffers for ACL Data:
+
+	1. The Host shall use the LE Read Buffer Size command to determine the buffers that are used for ACL Data on an LE-U logical link.
+	2. The Host shall use separate packet based flow control for each set of buffers.
+	3. The Connection_Handle contained in the ACL Data packet shall be used by the Controller to determine which set of buffers to use 
+	and the logical link (ACL-U or LE-U) over which the data is to be sent.
+
+	If a BR/EDR/LE Controller does not implement separate buffers, then all ACL Data shall use the BR/EDR buffer management as 
+	described below, and only the logical link (ACL-U or LE-U) shall be determined by the Connection_Handle
+
+	<TEXT/>
+
+	- Packet based Data Flow Control
+	- Data-block-based data flow control
+
+CONTROLLER TO HOST DATA FLOW CONTROL:
+	- The Set Host Controller To Host Flow Control command can be used to turn flow control on or off in that direction
+	- For AMP : Controller to Host data flow control is provided by HCI Physical transport or software equivalent
+	- Host buffer size command to notify the controller about maximum size of HCI ACL and SYNC data packets sent from Controller to Host.
+	- 2 additional params : to notify the total num of ACL and Synchronous data packets that can be data buffered in Host
+	- Host uses : Host Number of Completed Packet Command
+
+Disconnection Behaviour: 
+	- when Host Receives : Disconnection Complete , Disconnection physical link complete, Disconnection Logical Link Complete
+	- Host shall assume that all unacknowledged data packets have been flushed & corresponding data buffers have been freed.
+	- A primary controller doesnt have to notify about this to host via any means
+	- Nor Does the AMP Controller have to notify this to the host
+	- Even if flow control is enabled from controller to host: controller may assume that host has flushed data buffers for the sent handle
+
+Command Flow Control :
+	- Power on: Host shall send maximum of 1 outstanding HCI command packet untill complete or status has been received.
+	- 
+
+Command Error Handling:
+
+
+HCI CONFIGURATION PARAMETERS:
+	- Scan Enable
+	- Inquiry Scan Interval
+	- Inquiry Scan Window
+	- Inquiry Scan Type
+	- Inquiry Mode
+	- Page Timeout
+	- Connection Accept Timeout
+	- Page Scan Interval
+	- Page Scan Window
+	- Page Scan Type
+	- Voice Setting
+	- PIN Type
+	- Link Key
+	- Failed Contact Counter
+	- Authentication Enable
+	- Hold Mode Activity
+	- Link Policy Settings
+	- Flush Timeout
+	- Num Broadcast Retransmissions
+	- Link Supervision Timeout
+	- Synchronous Flow Control Enable
+	- Local name
+	- Extended Inquiry Response
+	- Errorneous data reporting
+	- Class of device
+	- Supported Commands
+	- Logical Link Accept timeout
+	- Location Domain Aware
+	- Location Domain
+	- Location Domain Options
+	- Location Options
+	- Flow Control Mode
+	- LE Supported Host
+	- Simultaneous LE Host
+	
+HCI COMMANDS AND EVENTS:
+	- Link Control Commands
+	- Link Policy Commands
+	- Controller and baseband commands
+	- Informational Parameters
+	- Status Parameters
+	- Testing Commands
+	- Events
+	- LE Controller Commands
+
+

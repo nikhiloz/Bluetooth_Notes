@@ -1,0 +1,43 @@
+Establishment Procedure:
+
+	Device is aware of:
+
+	• The Bluetooth Device Address (BD_ADDR) from which the Device Access Code is generated;
+	• The system clock of the remote device;
+	• The page scan mode used by the remote device.
+
+	Additional information provided during device discovery:
+
+	• The Class of device;
+	• The Device name;
+	• The supported Service Classes.
+
+Link Establishment :
+
+	- Both devices may perform link setup (using LMP procedures that require no interaction with the host on the remote side). 		  
+	- Optional LMP features can be used after having confirmed (using LMP_feature_req) that the other device supports the feature
+
+	- When the paging device needs to go beyond the link setup phase, it issues a request to be connected to the host of the 		  remote device. If the paged device is in security mode 3, this is the trigger for initiating authentication.
+
+	- The paging device shall send LMP_host_connection_req during link establishment (i.e., before channel establishment) and may 		  initiate authentication only after having sent LMP_host_connection_req.
+
+	- After an authentication has been performed, any of the devices can initiate encryption.
+
+	- Further link configuration may take place after the LMP_host_connection_req.
+
+	- When both devices are satisfied, they send LMP_setup_complete.
+
+	- Link establishment is completed when both devices have sent LMP_setup_complete
+
+Channel Establishment :
+
+Connection Establishment :
+
+Establishment of additional Connection :
+
+	• A second connection on the same channel, and/or
+
+	• A second channel on the same logical link, and/or
+
+	• A second physical link.
+

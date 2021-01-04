@@ -1,0 +1,27 @@
+LE Security Spec :
+
+Defines modes and Procedure :
+
+	• LE security mode 1
+	• LE security mode 2
+	• Authentication procedure
+	• Authorization procedure
+	• Connection data signing procedure
+	• Authenticate signed data procedure
+
+LE Security Modes :
+
+	- Security requirements of a device, a service or service request are expressed in terms security mode or security level
+	- Each service may have its own service requirements
+	
+	LE SECURITY MODE 1 :
+		1. No security (No authentication and no encryption)
+		2. Unauthenticated pairing with encryption
+		3. Authenticated pairing with encryption
+
+		* A connection in LE security mode 1 level 3 shall also satisfy the security requirements for LE security mode 2.
+
+	LE SECURITY MODE 2 :
+		1. Unauthenticated pairing with data signing
+		2. Authenticated pairing with data signing
+

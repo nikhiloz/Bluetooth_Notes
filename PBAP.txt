@@ -1,0 +1,105 @@
+- Defines Protocol and procedures that shall be used by device for retrival of phone book objects
+- based on Client Server Interaction model where the client device pulls the Phone book Object from server
+
+- Specially tailored for handsfree usage case (in accordance with HFP and SIM)
+- This profile only allows for the consulation of phone book objects (Read Only)
+- Dependencies: If it uses the other part of profile : GOBEXP + SPP + GAP
+
+
+Profile Stack:- BB, LMP and L2CAP are OSI Layer1 & Layer2; RFCOMM is Bluetooth Serial Port Emulation Entity; 
+
+Configuration & Roles :- 
+	PSE (Phone Book Server Equipment)
+	PCE (Phone Book Client Equipment)
+
+Profile Fundamental : 
+	- Only after successful creation of secure connection
+	- BOND ; Initialization Including PIN; Creation of link key; Encryption and Service Discovery (SDP)
+
+Bluetooth Security :
+	- 2 Device shall create a secure Connection using GAP Authentication Process
+	- Bonding : Security mode 2 or 3 shall be used
+	- Encryption : Encryption should be enabled
+	- PASSKEY : Prohibit the use of zero length passkey
+	- Linkeys : Combinational Key should be used (not unit key)
+	- Encryption key length : 64 bits , for increased security use as per regulation says
+	- User Confirmation :PSE has to confirm at least once for each new PCE
+
+Application layer :
+	- Phone Book Objects
+	- Phone book Object Representations :
+	- Phone book entries format : PSE Shall support : vCard 2.1 or vCard 3.0 ; Char Set - UTF-8
+
+PHONE BOOK ACCESS FEATURES:
+	Phone book access profile feature :
+		-		PCE	PSE
+		Browsing	C1	M
+		Download	C1	M
+		C1 = atleast one should be supported
+
+	Phone Book Download feature :
+
+	Phone Book Browsing feature :
+
+OBEX: 
+
+	OBEX OPERATIONS USED :
+
+	Obex Operation		PCE(Ability to send)		PSE(Abilityu to respond)
+	Connect			M				M
+	Disconnect		M				M
+	Get			M				M
+	Abort			M				M
+	SetPath			C1				M
+	C1= if PB browsing is supported
+
+	OBEX HEADERS :
+		Obex Headers		PCE		PSE
+		Name			M		M
+		Type
+		Body
+		End of Body
+		Target
+		Who
+		Connection ID
+		Auth Challenege
+		Auth Response
+		Appl Params
+
+		Application parameter headers :
+		
+		Obex header in Multi packet Responses :
+			• Bad Request.
+			• Not implemented.
+			• Not Found
+			• Service unavailable
+
+		
+		OBEX Error Codes :
+		
+	
+	Initializing OBEX:
+		Support for OBEX Authentication is mandatory
+
+	Establishing an OBEX Session :
+
+	Terminate an OBEX Session :
+
+Generic Access Profile :
+
+	Modes :
+		Discoverability Modes : General D M:	PCE (M) - PSE (M)
+		Connectibility Modes:	Connectable:	PCE (O) - PSE (M)
+		Pairing Modes:		Pairable:	PCE (M) - PSE (M)
+
+	Security Aspects :
+		Authentication :	M for Both
+		Encryption :		M For both
+		Security Modes: 	Either 2 or 3
+
+	Idle Mode Procedures :
+		General Inquiry:	PCE(O) - PSE (M)
+		Limited Enquiry:	PCE(O) - PSE (O)
+		Name Discovery: 	PCE(O) - PSE (O)
+		Deviced Disc:		PCE(O) - PSE (O)
+		Bonding:		PCE(M) - PSE (M)

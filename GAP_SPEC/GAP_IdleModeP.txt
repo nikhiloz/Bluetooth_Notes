@@ -1,0 +1,33 @@
+Idle Mode Procedures :
+
+General Inquiry :
+
+	- Provides : BD_ADDR , Clock, page_scan_mode, Class of device, EIR Data
+
+Limited Inquiry :
+
+	- Provides : BD_ADDR , Clock, page_scan_mode, Class of device, EIR Data
+
+	- The latter devices are devices that are in range with regard to the initiator, and may be set to scan for inquiry messages 		  with the Limited Inquiry Access Code, in addition to scanning for inquiry messages with the General Inquiry Access Code.
+ 
+	- The limited inquiry should be used by devices that need to discover devices that are made discoverable only for a limited 		  period of time, during temporary conditions or for a specific event
+
+	- Since it is not guaranteed that the discoverable device scans for the LIAC, the initiating device may choose any
+	  inquiry procedure (general or limited)
+
+	- TGAP(103)
+
+
+Name Discovery :
+
+Device Discovery :
+
+Bonding :
+
+	- The purpose of bonding is to create a relation between two Bluetooth devices based on a common link key (a bond)
+
+	- The link key is created and exchanged (pairing) during the bonding procedure and is expected to be stored by both Bluetooth 		  devices, to be used for future authentication
+
+	- In addition to pairing, the bonding procedure can involve higher-layer initialization procedures
+
+

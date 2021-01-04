@@ -1,0 +1,229 @@
+Service Level Connection Release :
+
+	- Either the HF or AG shall initiate the Service Level Connection release‖ procedure due to an explicit user request.
+	- The Service Level Connection release‖ procedure shall be initiated if the Bluetooth functionality is disabled in either 		  the HF or AG.
+	- The Service Level Connection release‖ procedure may be initiated if an ―Audio Connection transfer towards the AG‖, as 	  stated in section 4.11, is performed during an ongoing call in the AG. In the case that the Service Level Connection is 		  removed, the AG shall attempt to re-establish the Service Level Connection once the call is dropped
+
+*	The AT+CMER command, as described in Section 4.2, enables the Signal strength Indication‖ function in the AG.
+*	The AT+BIA command, as described in Section 4.2, allows the HF to deactivate/reactivate individual indicators.
+
+*	When the CMER function is enabled and the indicator has not been deactivated by the AT+BIA command, the AG shall send the 	  +CIEV unsolicited result code with the corresponding signal strength indicator and value whenever the
+
+	- Transfer of Registration Status :
+	- Transfer of Signal Strength Indication : +CIEV: <Signal strength Ind>,<Value>
+	- Transfer of Roaming Status : +CIEV: <RoamingInd>,<Value>
+	- Transfer of Battery Level Indication of AG : +CIEV: <Battery level Ind>,<Value>
+	- Query Operator Selection : AT+COPS=3,0 | OK | AT+COPS? | AT+COPS: <mode>, 0, <operator>
+	- Report Extended Audio Gateway Error Result Codes : AT+CMEE=<n> , OK , +CME ERROR: <err>
+	- Transfer of Call , call setup & Held Call Status
+	- Audio Connection Setup :
+
+		- Audio Connection Setup by AG : 
+				<< Established Service Level Connection >>
+				HF << Codec Connection Setup]] AG
+				HF << Established Audio Connection >> AG
+		- Audio Connection Setup by HF : 
+				<< Established Service level Connection >>
+				HF [[AT+BCC> AG
+				HF << OK ]] AG
+				HF << Codec Connection Setup ]] AG
+				<< Established Audio Connection >>
+		- Codec Connection Setup : 
+				<< Established Service level Connection >>
+				HF << +BCS:<Codec ID>]] AG
+				HF [[ At+BCS=<Codec ID>> AG
+				HF << OK ]] AG
+				HF << Synchronous Connection Setup ]] AG
+				<< Established Audio Connection >>
+		- Available Codecs updating :
+				HF [[ AT + BAC = <n1,n2> >> AG
+		- Codec Negotiation :
+
+	- Audio Connection Release :
+				<< Established Audio Connection >>
+				<< Synchronous Connection Release >>
+
+	- Answering an Incoming call : 
+		- In band ringing :
+				<< Established Service level Connection >>
+				HF << +CIEV: (callsetup = 1) ]] AG
+				HF << Audio Connection Setup ]] AG
+				<< Established Audio Connection >>
+				HF << RING(Alert) ]] AG
+				HF << -- +CLIP -- ]] AG
+				HF << Inband ringtone (ALERT) ]] AG
+				HF [[ ATA(Answer)>> AG
+				HF << OK ]] AG
+				HF << +CIEV:(call =1) ]] AG
+				HF << +CIEV: (Callsetup = 0) ]] AG
+
+		- No in band ringing :
+				<< Established Service level Connection >>
+				HF << +CIEV: (callsetup = 1) ]] AG
+				HF << RING(Alert) ]] AG
+				HF << -- +CLIP -- ]] AG
+				HF [[ ATA(Answer)>> AG
+				HF << OK ]] AG
+				HF << +CIEV:(call =1) ]] AG
+				HF << +CIEV: (Callsetup = 0) ]] AG
+				HF << Audio Connection Setup ]] AG
+				<< Established Audio Connection >>
+
+		- Answer from AG :
+				<< Established Service level Connection >>
+				HF << +CIEV: (callsetup = 1) ]] AG
+				HF << RING(Alert) ]] AG
+				HF << -- +CLIP -- ]] AG
+				HF << +CIEV:(call =1) ]] AG
+				HF << +CIEV: (Callsetup = 0) ]] AG
+				
+		- Change the in band ringing tone : 
+				HF << +BSIR : 0 ]] AG
+
+	- Reject an Incoming Call :
+		- from HF :
+				<< Established Service level Connection >>
+				HF << +CIEV: (callsetup = 1) ]] AG
+				HF << RING(Alert) ]] AG
+				HF << -- +CLIP -- ]] AG
+				HF [[ AT + CHUP (REJECT) >> AG
+				HF << OK ]] AG
+				HF << +CIEV: (Callsetup = 0) ]] AG
+
+		- From AG : 
+				<< Established Service level Connection >>
+				HF << +CIEV: (callsetup = 1) ]] AG
+				HF << RING(Alert) ]] AG
+				HF << -- +CLIP -- ]] AG
+				HF << +CIEV: (Callsetup = 0) ]] AG
+
+	- Terminate a call process :
+		- from HF : 
+				<< Established Service level Connection >>
+				<< Ongoing Call Process >>
+				HF [[ AT + CHUP >> AG
+				HF << OK ]] AG
+				HF << +CIEV: (Call = 0) ]] AG
+
+		- from AG : 
+				<< Established Service level Connection >>
+				<< Ongoing Call Process >>
+				HF << +CIEV: (Call = 0) ]] AG
+
+	- Audio Connection Transfer Towards HF :
+				<< Established Service level Connection >>
+				<< Audio Connection Setup >>
+
+	- Audio Connection Transfer towards AG : 
+				<< Established Service level Connection >>
+				<< Audio Connection Release >>
+
+	- Place a call with the phone number supplied by HF :
+				<< Established Service Level Connection >>
+				HF [[ ATD dd..dd >> AG
+				HF << OK ]] AG
+				HF << +CIEV:(callsetup =1) ]] AG
+				HF << Audio Connection Setup ]] AG
+				<< Established Audio Connetion >>
+				HF << +CIEV:(callsetup =3)]] AG
+				..
+				HF << +CIEV:(call =1) ]] AG
+				HF << +CIEV:(callsetup =0) ]] AG
+				
+	- Memory Dialling from HF :
+				<< Established Service Level Connection >>
+				HF [[ ATD>nn >> AG
+				HF << OK ]] AG
+				HF << +CIEV:(callsetup =1) ]] AG
+				HF << Audio Connection Setup ]] AG
+				<< Established Audio Connetion >>
+				HF << +CIEV:(callsetup =3)]] AG
+				..
+				HF << +CIEV:(call =1) ]] AG
+				HF << +CIEV:(callsetup =0) ]] AG
+
+	- Last Number Redial from HF : 
+				<< Established Service Level Connection >>
+				HF [[ AT+BLDN >> AG
+				HF << OK ]] AG
+				HF << +CIEV:(callsetup =1) ]] AG
+				HF << Audio Connection Setup ]] AG
+				<< Established Audio Connetion >>
+				HF << +CIEV:(callsetup =3)]] AG
+				..
+				HF << +CIEV:(call =1) ]] AG
+				HF << +CIEV:(callsetup =0) ]] AG
+
+	- Call Waiting Notification Activation : AT + CCWA = 1 | OK 
+	- Three way call handling :
+		- Threeway calling - call waiting notification
+		- Threeway Calls - Third party Call placed from HF
+	- Calling Line Identification : AT + CLIP = 1 | OK | +CLIP
+	- The HF Requests Turning off the AG's EC and NR : AT + NREC
+ 	- Voice Recognition Activation : AT + BVRA | +BVRA:0
+	- Attach a Phone Number to Voice Tag : AT + BINP = 1 | +BINP:8010592352 
+	- Transmit DTMF Code : At + VTS
+	- Remote Audio Volume Control : AT+VGM=6 | AT+VGS=7 | +VGM:9 | +VGS:10
+	- Response and Hold :
+		- Query Response and Hold: At+BTRH?
+		- Put an Incoming on Hold from HF : AT + BTRH = 0 | +BTRH:0
+		- Put an incoming call on Hold from AG : +BTRH:0
+		- Accept a held call from HF : AT + BTRH = 1 | +BTRH:1
+		- Accept a held call from AG : +BTRH:1
+		- Reject a held call from HF : AT + BTRH = 2 | +BTRH:2
+		- Reject a Held call from AG : +BTRH=2
+		- Held incoming call terminated by Caller +BTRH=2
+	- Subscriber Number Information : AT + CNUM | +CNUM
+	- Enhanced Call status Indication : 
+	- Enhanced Call Control Mechanism :
+
+4.33 AT Commands and Result Codes :
+	- Reused from GSM 07.07 & 3GPP 27.07
+		- ATA (standard call answer)
+		- ATDddd..dd (standard AT command to place a call to intended phone number)
+		- ATD>nnn..; (Extension of ATD command )
+		- ERROR (Standard Error Indication)
+		- OK (Standard Acknowledgement)
+		- NO CARRIER, BUSY, NO ANSWER, DELAYED, BLACKLISTED | in addition to CME ERROR
+		- RING (Standard incoming call indication)
+		- AT + CCWA (Standard Call waiting notification) if supported by network
+		- AT + CHLD (Standard call hold and multiparty handling)
+		- AT + CHUP (Standard hangup AT Command)
+		- AT + CIND (Standard List of Currrent Phone Indicators)
+		- +CIND
+		- AT + CLCC (Standard List of current call)
+		- +CLCC
+		- AT + COPS (Query Operator)
+		- AT + CMEE (Standard AT Command to enable Result Code)
+		- +CMEE ERROR
+		- AT + CLIP (Calling line Identification)
+		- +CLIP
+		- AT + CMER (Standard event reporting Activation / Deactivation)
+		- +CIEV (Standard Indicator Event Reporting)
+		- AT + VTS (Standard DTMF generation AT Command)
+		- AT + CNUM (Retrieve Subscriber Number Information)
+		- +CNUM
+		- 
+
+4.34 : Indicators Activation and Deactivation :  AT + BIA
+	- Bluetooth Defined AT Capabilities :
+		- AT + BIA  (Bluetooth Indicator Activation)  
+			NOTE: The actual number of allowed indicators is defined by the AT+CINDcommand.
+
+		- AT + BINP (Bluetooth Input)
+		- AT + BLDN (Bluetooth Last Dialled Number)
+		- AT + BVRA (Bluetooth Voice Recognition Activation)
+		- +BVRA
+		- AT + BRSF (Bluetooth Retrieve supported Feature)
+		- +BRSF
+		- AT + NREC (Noise reduction & Echo Cancellation)
+		- AT + VGM  (Gain of microphone)
+		- AT + VGS  (Gain of speaker)
+		- +VGS
+		- +VGM
+		- +BSIR (Bluetooth setting of in band ring tone)
+		- AT + BTRH (Bluetooth Response & Hold feature)
+		- +BTRH
+		- AT + BCC (Bluetooth Codec Connection)
+		- AT + BCS (Bluetooth Codec Selection)
+		- AT + BAC (Bluetooth Available Codecs)

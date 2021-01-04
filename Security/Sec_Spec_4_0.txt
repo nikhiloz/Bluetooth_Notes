@@ -1,0 +1,79 @@
+Key Management :
+	- Link key is 128 bit random number which is shared between 2 or mote parties.
+	- Key itself used for authentication .
+	- Link key is one of the parameterfor generation of Encryption key
+	- Link key ios semi permanent or temporary
+	- Semi permanent is stored in NVM and may be used in many subsequent authentication
+	- Life time of temporary key is limited to current session
+	- 4 types of linkkey has been defined:
+
+		• the combination key KAB
+		• the unit key KA
+		• the temporary key Kmaster
+		• the initialization key Kinit
+
+	- Kc is encryption key ; shorter . it is different from link key because we want good authentication
+	
+	[/TEXT]
+
+	Alternatively, the PIN can be selected by the user, and then entered in both devices that are to be matched. The latter 	procedure should be used when both devices have a user interface, for example a phone and a laptop. Entering a PIN in both 		devices is more secure than using a fixed PIN in one of the devices, and should be used when- ever possible. Even if a fixed 		PIN is used, it shall be possible to change the PIN; this is in order to prevent re-initialization by users who once obtained 		the PIN. If no PIN is available, a default value of zero may be used. The length of this default PIN is one byte, PIN 		(default) = 0x00. This default PIN may be provided by the host
+
+	For many applications the PIN code will be a relatively short string of numbers.
+	Typically, it may consist of only four decimal digits. Even though this gives suffi-
+	cient security in many cases, there exist countless other, more sensitive, situa-
+	tions where this is not reliable enough. Therefore, the PIN code may be chosen
+	to be any length from 1 to 16 octets. For the longer lengths, the devices
+	exchanging PIN codes may not use mechanical (i.e. human) interaction, but
+	rather may use software at the application layer. For example, this can be a Dif-
+	fie-Hellman key agreement, where the exchanged key is passed on to the K init
+	generation process in both devices, just as in the case of a shorter PIN code.
+	
+	[TEXT/]
+	
+
+KEY Generation and Initialization :
+
+	• generation of an initialization key
+	• generation of link key
+	• link key exchange
+	• authentication
+	• generation of encryption key in each device (optional)
+
+
+	Generation of Kinit:
+	- A link key is used temporarily during initialization, the initialization key K init
+	- 128 bit output = Derived by E22 Algorithm (BD_ADDR, Pin Code, Length of PIN, IN_RAND)
+	- The 128-bit output from E 22 shall be used for key exchange during the generation of a link key.
+	- When the devices have performed the link key exchange, the initialization key shall be discarded
+
+	[/TEXT]
+	When the initialization key is generated, the PIN is augmented with the
+	BD_ADDR. If one device has a fixed PIN the BD_ADDR of the other device
+	shall be used. If both devices have a variable PIN the BD_ADDR of the device
+	that received IN_RAND shall be used. If both devices have a fixed PIN they
+	cannot be paired. Since the maximum length of the PIN used in the algorithm
+	cannot exceed 16 octets, it is possible that not all octets of BD_ADDR will be
+	used. This procedure ensures that K init depends on the identity of the device
+	with a variable PIN
+	[TEXT/]
+
+	Generation of combination key :
+	- Each Device calculates LK_RANDa LK_RANDb
+	- LK_KA = E2I(LK_RANDa, BD_ADDRa) & LK_KB = E2I(LK_RANDb, BD_ADDRb)
+	- Ca = LK_RANDa (+) K & Cb = LK_RANDb (+) & K  where K =Kinit
+	- Exchange Ca and Cb
+	- Calculate LK_KB in device A & LK_KA in Device B
+	- KAB = LK_KA (+) LK_KB & KBA = LK_KB (+) LK_KA & KAB = KBA = Link Key [Legacy Pairing]
+
+
+SECURE SIMPLE PAIRING :
+
+	• Phase 1: Public key exchange
+	• Phase 2: Authentication Stage 1
+	• Phase 3: Authentication Stage 2
+	• Phase 4: Link key calculation
+	• Phase 5: LMP Authentication and Encryption
+
+	- 
+
+	

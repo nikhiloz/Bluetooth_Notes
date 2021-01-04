@@ -1,0 +1,24 @@
+ETSI TS 7.10
+
+Pin 	Circuit Name
+102 	Signal Common
+103 	Transmit Data (TD)
+104 	Received Data (RD)
+105 	Request to Send (RTS)
+106 	Clear to Send (CTS)
+107 	Data Set Ready (DSR)
+108 	Data Terminal Ready (DTR)
+109 	Data Carrier Detect (CD)
+125 	Ring Indicator (RI)
+
+Table 2.1: Emulated RS-232 circuits in RFCOMM
+
+
+Frame Types :
+
+	Set Asynchronous Balanced Mode (SABM) command
+	Unnumbered Acknowledgement (UA) response
+	Disconnected Mode (DM) response
+	Disconnect (DISC) command
+	Unnumbered information with header check (UIH) command and response
+

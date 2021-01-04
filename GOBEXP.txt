@@ -1,0 +1,66 @@
+- Requirement for the BT Device for necessary for the support of The Object Exchange Model
+- By Defining Feature & Procedure
+
+- Generic Object Exchange Profile defines : Protocol and Procedure used by application providing the Usage Model
+
+- Synchronization Model
+- File Transfer Model
+- Object Push Model
+
+
+1. Bluetooth IrDA Interoperability Specification [1]
+	• Defines how the applications can function over both Bluetooth and IrDA.
+	• Specifies how OBEX is mapped over RFCOMM and TCP.
+	• Defines the application profiles using OBEX over Bluetooth.
+
+2. Bluetooth Generic Object Exchange Profile Specification (This specification)
+	• Generic interoperability specification for the application profiles using OBEX.
+	• Defines the interoperability requirements of the lower protocol layers (e.g.Baseband and LMP) for the application profiles.
+
+3. Bluetooth Synchronization Profile Specification [2]
+	• Application Profile for the Synchronization applications.
+	• Defines the interoperability requirements for the applications within the Synchronization application profile.
+	• Does not define the requirements for the Baseband, LMP, L2CAP, or RFCOMM.
+
+4. Bluetooth File Transfer Profile Specification [3]
+	• Application Profile for the File Transfer applications.
+	• Defines the interoperability requirements for the applications within the File Transfer application profile.
+	• Does not define the requirements for the Baseband, LMP, L2CAP, or RFCOMM.
+
+5. Bluetooth Object Push Profile Specification [4]
+	• Application Profile for the Object Push applications.
+	• Defines the interoperability requirements for the applications within the Object Push application profile.
+	• Does not define the requirements for the Baseband, LMP, L2CAP, orRFCOMM.
+
+Profile Fundamentals: 
+	- for first time : Bonding must be performed
+	- In addition to link level bonding : an Obex Initilization procedure may be performed
+	- Encryption and Authentication support : depends on application
+	- no master slave role
+	- no low power mode
+
+Application Layer :
+	Feature Overview :
+		Establishing an Object Exchange Session
+		Pushing a data Object
+		Pulling a Data Object
+
+
+
+Obex Operation Used :
+
+	- Connect - disconnect - put - get - abort - setpath
+
+
+Initlialization of OBEX :
+
+	- 
+Establishment of OBEX Session :
+
+	-
+
+LC Interoperatibility Requirements :
+
+	- HV1 , DV Packet mandatory
+	- HV2, HV3 Optional
+	

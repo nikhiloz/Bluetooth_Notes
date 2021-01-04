@@ -1,0 +1,77 @@
+Transport Specific Key Distribution: 
+	1. Encrypt link in future reconnection
+	2. verify signed data
+	3. Random Address Resolution
+
+Pairing is 3 phase process : 2 phase mandatory , 3 phase Optional
+
+	1. Pairing Feature Exchange
+	2. Short Term Key Generation
+	3. Transport Specific Key Distribution
+
+First Exchange IO Capabilities: in Pairing Feature Exchange
+	1. Just Works
+	2. Passkey Entry
+	3. Out of band
+
+Transport Specific Keys : LTK (Long Term Key) , EDIV (Encrypted Diversifier)
+
+#Phase 1 and Phase 3 almost same : regardless phase 2
+#Phase 3 shall only be performed on link which is encrypted by STK from phase 2
+#Phase 1 and 2 can be performed on encrypted or not encrypted link
+
+Cryptographic Toolbox: Random Address , Pairing , Other Operations 
+
+Security in BLE: 
+	@Originates from Master; 
+	@Slave can request the masterto initiate pairing or other security procedures;
+	@Slave in key distribution phase , reconnection can be encrypted , or master can verify the signed data
+	@Master may distribute key , reconnection can be encrypted ,master random address can be resolved , slave can verify signed data
+
+Definition of keys:
+	1. IRK (Identity resolving key)
+	2. CSRK(Connection Signature Resolving Key)
+	3. LTK (Long Term Key)
+	4. EDIV(Encryption Diverifier) to identify LTK
+	5. Rand (Random Number) to identify LTK
+
+Note: The distributed EDIV and Rand values are transmitted in clear text by the
+master device to the slave device during encrypted session setup.
+
+
+
+2.4.4 Encrypted Session Setup
+During the encryption session setup the master device sends a 16-bit
+Encrypted Diversifier value, EDIV, and a 64-bit Random Number, Rand , distrib-
+uted by the slave device during pairing, to the slave device. The master’s Host
+provides the Link Layer with the Long Term Key to use when setting up the
+encrypted session. The slave’s Host receives the EDIV and Rand values and
+provides a Long Term Key to the slaves Link Layer to use when setting up the
+encrypted link.
+
+
+Signing Algorithm: 
+	@an LE Device can send signed data without having to establish an encrypted session with a peer device
+
+Slave Security Request :
+	@Slave device may request Security by transmitting :Security Request Command to master
+	@Master may : Encrypt the Link : Initiate the Piaring : Reject the Request
+	@If Pairing or Encryption Procedure is ongoing .. it wont send Security Request Command
+
+
+
+LTK using Encryption Information command
+• EDIV and Rand using Master Identification command
+• IRK using Identity Information command
+• Public device or static random address using Identity Address Information command
+• CSRK using Signing Information command
+
+The master may distribute to the slave the following key:
+• LTK using Encryption Information command
+• EDIV and Rand using Master Identification command
+• IRK using Identity Information command
+• Public device or static random address using Identity Address Information command
+• CSRK using Signing Information command
+
+
+

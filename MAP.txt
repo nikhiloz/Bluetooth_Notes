@@ -1,0 +1,19 @@
+Configuration and Roles :
+
+	- Message Server Equipment
+	- Message Client Equipment
+
+Bluetooth Security :
+	- Bonding : if supported SSP security mode 4 or sec mode 2 /3
+	- BT Pass Key: Security mode 2 or 3 & Prohibit Zero Length pass key
+	- Encryption : Min 64 Bit
+	- Link Key : Combinational
+
+
+MAP MCE Device 		MAP MSE Device
+
+MAS Client ------------ MAS Server (Inst 0) + MAS Server (Inst 1)
+MNS Server ------------ MNS Client
+
+
+			

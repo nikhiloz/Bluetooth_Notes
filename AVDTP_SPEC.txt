@@ -1,0 +1,88 @@
+AUDIO/VIDEO DISTRIBUTION TRANSPORT PROTOCOL SPECIFICATION
+
+* Audio / Video Stream requires isochronous data transmission capabilities
+* Transport mechanism of this profile is based on RTP
+* RTP transfer protocol (RTP): RTP Control protocol (RTCP)
+* A/V Streams are transmitted in Pseudo-Isochronous L2CAP Channels.
+* Signalling provides Stream Discovery, Configuration, Establishment, and transfer Control
+
+STACK OVERVIEW:
+* AVDTP exposes 3 interface to the upper layer and 2 interface to Bluetooth Stack
+* AVDTP Performs AV parameter negotiation
+
+
+Architectural Interface:
+* IFACE1 : SDP Message iface used to discover bluetooth attributes from a distant device.
+* IFACE2 : Application iface used to exchange reporting packets  of the stream  b/w 2 interconnected devices (QOS reporting)
+* IFACE3 : used to exchange signalling messages for stream setup phase, reconfiguring and tear down.
+* IFACE4 : A/V elementry media packet . Media packet format is defined at Profile Level.
+* IFACE5 : L2CAP channel for signalling . PSM Value = AVDTP
+* IFACE6 : L2CAP channel for transport of media Packet
+
+Functional Requirements :
+* Means to discover capabilities of devices
+* mechanism to establish n tear down a stream
+* mechanism to minimize transmission delay
+* mechanism for reporting QOS and status of transport of media packets to the application
+* mechanism to optimise the available bandwidth
+* Provide recovery mechanism
+* provide mechanism to reduce the overhead of headers
+
+Terminology and Definition :
+* Stream represents the logical end to end connection of streaming media data.
+* As Streams are unidirectional media data, the peer devices explicitly assumes the roles of either SRC n SNK depending on the application
+
+Service Category: represents the top-level structuring element. 
+	- media transport
+	- reporting
+	- media recovery
+	- media codec
+	- content protection
+	- robust header compression
+	- multiplexing mode 
+
+Service Parameters: Service Category can comprise of one or multiple Service params
+	- SBC
+	- Sampling frequency
+	- Channel Mode
+
+Media packets - Recovery packets - Reporting Packets :
+	- Depending on the supported services, the peer AVDTP entities can exchange further information
+	- Recovery packets containing recovery data are sent by the SRC
+	- If QoS reporting is used, information is encapsulated in reporting packets
+
+SEP (Stream End Point)
+	- The Stream End-Point (SEP) is a concept to expose available Transport Services and AV capabilities of the Application in order to 		   negotiate a stream. 
+	- The Application registers its SEPs in AVDTP in order to allow other devices to discover and connect to them
+
+Signalling Procedure:
+	- Stream End Point Discovery
+	- Get Capabilities Procedure
+	- Stream Configuration Procedure
+	- Stream Establishment Procedure
+	- Stream Start Procedure
+	- Stream Suspend Procedure
+	- Stream Reconfiguration Procedure
+	- Stream Release Procedure
+
+Signal Command Set:
+	- AVDTP_DISCOVER
+	- AVDTP_GET_CAPABILITIES
+	- AVDTP_SET_CONFIGURATION
+	- AVDTP_GET_CONFIGURATION
+	- AVDTP_RECONFIGURE
+	- AVDTP_OPEN
+	- AVDTP_START
+	- AVDTP_CLOSE
+	- AVDTP_SUSPEND
+	- AVDTP_SECURITY_CONTROL
+	- AVDTP_ABORT
+
+State Machine overview :
+
+	IDLE --> Configured --> Open --> Streaming --> Closing
+	  |	   |		 |	   |		|	
+	  |----------------------------------------> Aborting
+
+
+													
