@@ -17,6 +17,6 @@ Security Overview:
     ======================================================
     1   BD_ADDR-------------------------------48 bits
     2   Private user key, Authentication------128 bits
-    3   Private user key, encryption----------8-128 bits
-        configurable length(byte-wise)
+    3   Private user key, encryption
+        configurable length(byte-wise)--------8-128 bits
     4   RAND----------------------------------128 bits
