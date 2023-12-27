@@ -40,8 +40,11 @@ Initiator                                                                       
 
 First Exchange IO Capabilities: in Pairing Feature Exchange
 	1. Just Works
-	2. Passkey Entry
-	3. Out of band
+	2. Numeric Comparison (Only for LE Secure Connections)
+	3. Passkey Entry
+	4. Out of band (OOB)
+
+Authentication requirements retrieved from the Pairing Feature Exchange also determine whether LE Secure Connections or LE legacy pairing is used.
 
 Transport Specific Keys : LTK (Long Term Key) , EDIV (Encrypted Diversifier)
 
