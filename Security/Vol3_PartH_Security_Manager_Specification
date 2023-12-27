@@ -24,7 +24,7 @@ Cryptographic Toolbox: Random Address , Pairing , Other Operations
 
 Security in BLE: 
 	@Originates from Master; 
-	@Slave can request the masterto initiate pairing or other security procedures;
+	@Slave can request the master to initiate pairing or other security procedures;
 	@Slave in key distribution phase , reconnection can be encrypted , or master can verify the signed data
 	@Master may distribute key , reconnection can be encrypted ,master random address can be resolved , slave can verify signed data
 
