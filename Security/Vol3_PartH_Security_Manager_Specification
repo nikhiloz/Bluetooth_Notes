@@ -15,6 +15,28 @@ Pairing is 3 phase process : 2 phase mandatory , 3 phase Optional
 	1. Pairing Feature Exchange
 	2. Short Term Key Generation
 	3. Transport Specific Key Distribution
+====================================================================================================
+Initiator                                                                                Responder
+    |                                                                                        |
+    |-------------------------    {established LL Connection} -------------------------------|
+    
+    |<---------------------------{ Optional - Security_Request} -----------------------------|
+    |----------------------------{ Pairing_Request }---------------------------------------->| Phase 1
+    |<---------------------------{ Pairing_Response}-----------------------------------------|
+    
+    
+    |                            {Pairing Over SMP}                                          |
+    |<-------------------------------------------------------------------------------------->| Phase 2
+    |                      {Legecy pairing or Secure Connections}                            |
+    
+               { Establishment of encrypted connection with key generated in phase 2 }
+    
+    |<---------------------------{ Key Distribution }----------------------------------------|
+    |<---------------------------{ Key Distribution }----------------------------------------| Phase 3
+    |----------------------------{ Key Distribution }--------------------------------------->|
+    
+====================================================================================================
+
 
 First Exchange IO Capabilities: in Pairing Feature Exchange
 	1. Just Works
