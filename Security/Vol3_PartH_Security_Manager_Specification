@@ -1,3 +1,10 @@
+*    The strength of a key is as strong as the algorithms implemented inside the distributing device.
+*    The security architecture is designed such that memory and processing requirements for a responding device are lower than the memory and processing requirement for an initiating device
+*    keys which can be used to
+		> encrypt a link in future reconnections,
+		> verify signed data and
+		> random address resolution.
+
 Transport Specific Key Distribution: 
 	1. Encrypt link in future reconnection
 	2. verify signed data
