@@ -73,5 +73,6 @@ The master may distribute to the slave the following key:
 • Public device or static random address using Identity Address Information command
 • CSRK using Signing Information command
 
+Addition
 
 
